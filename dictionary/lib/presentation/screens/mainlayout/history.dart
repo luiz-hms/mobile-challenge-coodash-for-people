@@ -62,6 +62,7 @@ class _HistoryState extends State<History> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        tooltip: 'Excluir lista',
         elevation: 1,
         backgroundColor: const Color(0xff151419),
         onPressed: () {

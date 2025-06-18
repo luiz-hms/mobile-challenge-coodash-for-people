@@ -62,7 +62,7 @@ class _FavoriteState extends State<Favorite> {
       floatingActionButton: FloatingActionButton(
         elevation: 1,
         backgroundColor: const Color(0xff151419),
-        tooltip: 'Increment',
+        tooltip: 'Excluir lista',
         onPressed: () {
           repository.cleanList(DatabaseHelper.columnFavorite);
           setState(() {});

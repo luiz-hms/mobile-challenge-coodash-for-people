@@ -1,6 +1,5 @@
 import 'package:dictionary/core/dependence_injector/injector.dart';
 import 'package:dictionary/core/routes/named_routes.dart';
-import 'package:dictionary/data/models/user_model.dart';
 import 'package:dictionary/domain/repositories/user_repository/user_repository.dart';
 import 'package:dictionary/presentation/widgets/custom_fields/fields_decoration.dart';
 import 'package:flutter/material.dart';

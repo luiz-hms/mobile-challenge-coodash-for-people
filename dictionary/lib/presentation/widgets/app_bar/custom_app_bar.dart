@@ -27,12 +27,6 @@ AppBar CustomAppBar(BuildContext context, String title) {
       title,
       style: TextStyle(color: Color(0xff151419), fontWeight: FontWeight.w700),
     ),
-    /*
-    const Text(
-      title,
-      style: TextStyle(color: Color(0xff151419), fontWeight: FontWeight.w700),
-    ),
-    */
     centerTitle: true,
     backgroundColor: Color(0xfffbfbfb),
     elevation: 1,

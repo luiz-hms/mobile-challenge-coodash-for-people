@@ -21,6 +21,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ValueNotifier<bool> isLoading = ValueNotifier(false);
+  final ValueNotifier<bool> obscurePassword = ValueNotifier(true);
+  final ValueNotifier<bool> obscureConfirmPassword = ValueNotifier(true);
 
   Future<void> _handleRegister() async {
     if (_formKey.currentState?.validate() ?? false) {
@@ -106,34 +108,72 @@ class _RegisterPageState extends State<RegisterPage> {
                             return null;
                           },
                         ),
-                        TextFormField(
-                          controller: passwordTextController,
-                          decoration: FieldsDecoration('senha'),
-                          obscureText: false,
-                          textInputAction: TextInputAction.next,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Informe a senha';
-                            }
-                            if (value.length < 6) {
-                              return 'A senha deve ter no mínimo 6 caracteres';
-                            }
-                            return null;
+                        ValueListenableBuilder<bool>(
+                          valueListenable: obscurePassword,
+                          builder: (_, value, __) {
+                            return TextFormField(
+                              controller: passwordTextController,
+                              decoration: FieldsDecoration(
+                                'senha',
+                                __,
+                                IconButton(
+                                  onPressed: () {
+                                    obscurePassword.value = !value;
+                                  },
+                                  icon: Icon(
+                                    value
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                  ),
+                                ),
+                              ),
+                              obscureText: value,
+                              textInputAction: TextInputAction.next,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Informe a senha';
+                                }
+                                if (value.length < 6) {
+                                  return 'A senha deve ter no mínimo 6 caracteres';
+                                }
+                                return null;
+                              },
+                            );
                           },
                         ),
-                        TextFormField(
-                          controller: passwordConfirmTextController,
-                          decoration: FieldsDecoration('confirmar senha'),
-                          obscureText: false,
-                          textInputAction: TextInputAction.done,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Confirme a senha';
-                            }
-                            return null;
+                        ValueListenableBuilder<bool>(
+                          valueListenable: obscureConfirmPassword,
+                          builder: (_, value, __) {
+                            return TextFormField(
+                              controller: passwordConfirmTextController,
+                              decoration: FieldsDecoration(
+                                'digite novamente a senha',
+                                __,
+                                IconButton(
+                                  onPressed: () {
+                                    obscureConfirmPassword.value = !value;
+                                  },
+                                  icon: Icon(
+                                    value
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                  ),
+                                ),
+                              ),
+                              obscureText: value,
+                              textInputAction: TextInputAction.done,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Informe a senha';
+                                }
+                                if (value.length < 6) {
+                                  return 'A senha deve ter no mínimo 6 caracteres';
+                                }
+                                return null;
+                              },
+                            );
                           },
                         ),
-                        const SizedBox(height: 20),
                         ValueListenableBuilder<bool>(
                           valueListenable: isLoading,
                           builder: (_, loading, __) {

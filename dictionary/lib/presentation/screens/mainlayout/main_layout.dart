@@ -1,7 +1,6 @@
 import 'package:dictionary/presentation/screens/mainlayout/favorite.dart';
 import 'package:dictionary/presentation/screens/mainlayout/history.dart';
 import 'package:dictionary/presentation/screens/mainlayout/home.dart';
-import 'package:dictionary/presentation/screens/mainlayout/settings.dart';
 import 'package:dictionary/presentation/widgets/bottom_navigation_bar_item/bottom_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
 

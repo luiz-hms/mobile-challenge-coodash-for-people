@@ -1,4 +1,5 @@
 import 'package:dictionary/core/routes/named_routes.dart';
+import 'package:dictionary/presentation/widgets/app_bar/custom_app_bar.dart';
 import 'package:dictionary/presentation/widgets/custom_fields/fields_decoration.dart';
 import 'package:dictionary/services/user_session.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,6 @@ class _SettingsState extends State<Settings> {
   final _userSession = GetIt.I<UserSession>();
   final ValueNotifier<bool> loading = ValueNotifier(false);
   final ValueNotifier<bool> obscurePassword = ValueNotifier(true);
-  final ValueNotifier<bool> obscureConfirmPassword = ValueNotifier(true);
 
   @override
   void initState() {
@@ -69,20 +69,7 @@ class _SettingsState extends State<Settings> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Atualizar Dados'),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await _userSession.clear();
-              Navigator.of(
-                context,
-              ).pushNamedAndRemoveUntil(NamedRoute.login, (route) => false);
-            },
-            icon: Icon(Icons.logout),
-          ),
-        ],
-      ),
+      appBar: CustomAppBar(context, "alterar dados"),
       body: Padding(
         padding: const EdgeInsets.only(top: 8),
         child: Center(
@@ -152,7 +139,7 @@ class _SettingsState extends State<Settings> {
                                   ),
                                 ),
                               ),
-                              textInputAction: TextInputAction.next,
+                              textInputAction: TextInputAction.done,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Informe a senha';
