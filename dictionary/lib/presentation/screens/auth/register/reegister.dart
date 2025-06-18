@@ -39,11 +39,9 @@ class _RegisterPageState extends State<RegisterPage> {
           passwordTextController.text,
         );
 
-        if (result != null) {
-          Navigator.of(
-            context,
-          ).pushNamedAndRemoveUntil(NamedRoute.main, (route) => false);
-        }
+        Navigator.of(
+          context,
+        ).pushNamedAndRemoveUntil(NamedRoute.main, (route) => false);
       } catch (e) {
         ScaffoldMessenger.of(
           context,

@@ -1,5 +1,6 @@
 import 'package:dictionary/core/dependence_injector/injector.dart';
 import 'package:dictionary/core/routes/named_routes.dart';
+import 'package:dictionary/data/models/user_model.dart';
 import 'package:dictionary/domain/repositories/user_repository/user_repository.dart';
 import 'package:dictionary/presentation/widgets/custom_fields/fields_decoration.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var repository = locator.get<UserRepository>();
+  var userRepository = locator.get<UserRepository>();
   final ValueNotifier<bool> obscurePassword = ValueNotifier(true);
   final ValueNotifier<bool> isLoading = ValueNotifier(false);
 
@@ -26,12 +27,12 @@ class _LoginPageState extends State<LoginPage> {
       isLoading.value = true;
 
       try {
-        final user = await repository.loginUser(
+        final userMap = await userRepository.loginUser(
           emailController.text.trim(),
           passwordController.text,
         );
 
-        if (user != null) {
+        if (userMap != null) {
           Navigator.of(
             context,
           ).pushNamedAndRemoveUntil(NamedRoute.main, (route) => false);

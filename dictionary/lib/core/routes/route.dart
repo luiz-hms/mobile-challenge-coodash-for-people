@@ -2,9 +2,9 @@ import 'package:dictionary/presentation/screens/auth/login/login.dart';
 import 'package:dictionary/presentation/screens/auth/register/reegister.dart';
 import 'package:dictionary/core/routes/named_routes.dart';
 import 'package:dictionary/presentation/screens/mainlayout/main_layout.dart';
+import 'package:dictionary/presentation/screens/mainlayout/settings.dart';
 import 'package:dictionary/presentation/screens/splash_screen.dart';
 import 'package:dictionary/presentation/screens/word_detail/word_detail.dart';
-import 'package:flutter/material.dart';
 
 class RouteHandler {
   static final routes = {
@@ -13,5 +13,6 @@ class RouteHandler {
     NamedRoute.register: (_) => const RegisterPage(),
     NamedRoute.main: (_) => const MainLayout(),
     NamedRoute.wordDetail: (_) => const WordDetail(),
+    NamedRoute.settings: (_) => const Settings(),
   };
 }

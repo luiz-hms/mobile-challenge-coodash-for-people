@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dictionary/presentation/widgets/app_bar/custom_app_bar.dart';
 import 'package:dictionary/presentation/widgets/card/card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -76,18 +77,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'lista de palavras',
-          style: TextStyle(
-            color: Color(0xff151419),
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Color(0xfffbfbfb),
-        elevation: 1,
-      ),
+      appBar: CustomAppBar(context, "lista de palavras"),
       body:
           _allWords.isEmpty
               ? const Center(child: CircularProgressIndicator())

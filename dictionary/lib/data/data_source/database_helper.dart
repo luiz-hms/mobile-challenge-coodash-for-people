@@ -85,6 +85,19 @@ class DatabaseHelper {
     }
   }
 
+  Future<Map<String, dynamic>?> getUserById(int id) async {
+    final dbClient = await database;
+    final result = await dbClient.query(
+      'users',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    if (result.isNotEmpty) {
+      return result.first;
+    }
+    return null;
+  }
+
   Future<Map<String, dynamic>?> loginUser(String email, String password) async {
     try {
       final db = await database;

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-InputDecoration FieldsDecoration(String hint, [Icon? prefix, Widget? sufix]) {
+InputDecoration FieldsDecoration(String hint, [Widget? prefix, Widget? sufix]) {
   return InputDecoration(
     prefixIcon: prefix,
     prefixIconColor: Color(0xfff56E0f),

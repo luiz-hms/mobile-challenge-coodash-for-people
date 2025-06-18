@@ -9,12 +9,13 @@ final GetIt locator = GetIt.instance;
 class Service {}
 
 void setupServiceLocator() {
-  locator.registerLazySingleton<UserSession>(() => UserSession()..load());
   locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper.instance);
-  locator.registerSingleton<WordRepository>(
-    WordRepository(locator(), locator()),
-  );
+  locator.registerLazySingleton<UserSession>(() => UserSession());
+
   locator.registerLazySingleton<UserRepository>(
-    () => UserRepository(locator(), locator()),
+    () => UserRepository(locator<DatabaseHelper>(), locator<UserSession>()),
+  );
+  locator.registerSingleton<WordRepository>(
+    WordRepository(locator<DatabaseHelper>(), locator<UserSession>()),
   );
 }

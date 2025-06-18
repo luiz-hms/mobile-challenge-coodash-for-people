@@ -5,4 +5,5 @@ class NamedRoute {
   static const register = '/register';
   static const main = '/main';
   static const wordDetail = '/worddetail';
+  static const settings = '/settings';
 }
