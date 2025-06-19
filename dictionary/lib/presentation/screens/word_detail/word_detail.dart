@@ -38,8 +38,10 @@ class _WordDetailState extends State<WordDetail> {
             );
           }
           if (snapshot.hasError) {
+            // ALGUMAS PALAVRAS NÃO ESTÃO SENDO ENCONTRADAS
             return Center(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Lottie.asset('assets/404.json', height: 400, width: 300),
                   Text('Palavra não encontrada'),
@@ -50,32 +52,46 @@ class _WordDetailState extends State<WordDetail> {
           final data = snapshot.data!;
           final wordDetails = data.first;
           String? audioUrl;
+          bool hasAudioUrl = false;
           for (var item in data) {
-            for (var phonetic in item.phonetics) {
-              // alguns campos "audio" vem vazio da api
-              // percorre as listas phonetics e verifica qual campo está preenchido
-              if (phonetic.audio != null &&
-                  phonetic.audio!.toString().isNotEmpty) {
-                audioUrl = phonetic.audio!;
+            if (item.phonetics.contains("audio") || item.phonetics.isNotEmpty) {
+              for (var phonetic in item.phonetics) {
+                // alguns campos "audio" vem vazio da api
+                // percorre as listas phonetics e verifica qual campo está preenchido
+                //porém algumas palavras NÃO TEM ÁUDIO como por exemplo a plavra aaa
+
+                if (phonetic.audio != null &&
+                    phonetic.audio.toString().isNotEmpty) {
+                  audioUrl = phonetic.audio!;
+                  hasAudioUrl;
+                  break;
+                }
+              }
+              if (audioUrl != null) {
+                hasAudioUrl = true;
                 break;
               }
+            } else {
+              hasAudioUrl = false;
+              break;
             }
-            if (audioUrl != null) break;
           }
           return Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Column(
+              spacing: 6,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  height: 300,
+                  height: 250,
                   margin: const EdgeInsets.symmetric(vertical: 30),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50),
                     child: Column(
-                      spacing: 10,
+                      spacing: 5,
                       children: [
+                        Text(audioUrl.toString()),
                         Text(
                           wordDetails.word,
                           textAlign: TextAlign.center,
@@ -86,7 +102,7 @@ class _WordDetailState extends State<WordDetail> {
                         ),
 
                         Text(
-                          'text: ${wordDetails.phonetics.first.text}',
+                          'text: ${wordDetails.phonetics.first.text ?? ''}',
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontWeight: FontWeight.w400,
@@ -97,13 +113,15 @@ class _WordDetailState extends State<WordDetail> {
                     ),
                   ),
                 ),
-                CustomAudio(urlAudio: audioUrl.toString()),
-                const SizedBox(height: 50),
+                Visibility(
+                  child: CustomAudio(urlAudio: audioUrl.toString()),
+                  visible: false,
+                ),
+                // CustomAudio(urlAudio: audioUrl.toString()),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18),
                   child: Column(
                     spacing: 5,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
