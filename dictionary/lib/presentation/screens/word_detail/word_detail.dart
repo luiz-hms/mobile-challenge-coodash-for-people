@@ -50,7 +50,10 @@ class _WordDetailState extends State<WordDetail> {
             );
           }
           final data = snapshot.data!;
-          final wordDetails = data.first;
+          var wordDetails;
+          if (data.isNotEmpty) {
+            wordDetails = data.first;
+          }
           String? audioUrl;
           bool hasAudioUrl = false;
           for (var item in data) {
@@ -76,6 +79,18 @@ class _WordDetailState extends State<WordDetail> {
               break;
             }
           }
+
+          // Verificando se tem texto fonético
+          final hasPhoneticText =
+              wordDetails.phonetics.isNotEmpty &&
+              wordDetails.phonetics.first.text != null &&
+              wordDetails.phonetics.first.text!.isNotEmpty;
+
+          // Verificando se tem definição
+          final hasDefinition =
+              wordDetails.meanings.isNotEmpty &&
+              wordDetails.meanings.first.definitions.isNotEmpty;
+
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Column(
@@ -91,7 +106,6 @@ class _WordDetailState extends State<WordDetail> {
                     child: Column(
                       spacing: 5,
                       children: [
-                        Text(audioUrl.toString()),
                         Text(
                           wordDetails.word,
                           textAlign: TextAlign.center,
@@ -102,7 +116,7 @@ class _WordDetailState extends State<WordDetail> {
                         ),
 
                         Text(
-                          'text: ${wordDetails.phonetics.first.text ?? ''}',
+                          'text: ${hasPhoneticText}',
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontWeight: FontWeight.w400,
@@ -115,9 +129,8 @@ class _WordDetailState extends State<WordDetail> {
                 ),
                 Visibility(
                   child: CustomAudio(urlAudio: audioUrl.toString()),
-                  visible: false,
+                  visible: hasAudioUrl,
                 ),
-                // CustomAudio(urlAudio: audioUrl.toString()),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18),
                   child: Column(
@@ -134,7 +147,7 @@ class _WordDetailState extends State<WordDetail> {
                         ),
                       ),
                       Text(
-                        'definition - ${wordDetails.meanings.first.definitions.first.definition}',
+                        'definition - ${hasDefinition}',
                         style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 15,
